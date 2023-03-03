@@ -148,12 +148,18 @@ h1 span:first-of-type {
 	border:solid 2px black;
 	border-radius: 100px;
 }
+
 .throbber {
 	background: rgb(255,255,255);
-	background: radial-gradient(circle, rgba(255,255,255,1) 3%, rgba(200,9,9,1) 23%, rgba(121,9,9,0) 100%);
+	background: radial-gradient(circle, rgba(255,255,255,1) 2%, rgba(255,255,0,1) 10%, rgba(200,9,9,0.75) 15%, rgba(121,9,9,0) 30%);
 	height: 50px;
 	width: 50px;
-	transition: all 90ms;
+	transition: all 250ms;
 	transform: scale(1);
 	border-radius: 100px;
+	transform: scale(3);
+}
+
+.throbber[data-state="waiting"] {
+	transform: scale(3) !important;
 }

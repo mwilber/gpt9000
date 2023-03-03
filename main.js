@@ -19,7 +19,7 @@ const Init = () => {
 	utterance = new SpeechSynthesisUtterance("");
 
 	delay = 50;
-	scale = 7;
+	scale = 8;
 	timer = null;
 
 	throbber.dataset.state = "waiting";
@@ -52,7 +52,7 @@ const InitSpeechEvents = () => {
 			if(timer) clearTimeout(timer);
 			timer = setTimeout(() => {
 				//console.log('shrink')
-				throbber.style.transform = 'scale(0)';
+				throbber.style.transform = 'scale(1)';
 			}, spokenWord.length * delay);
 		}
 	
@@ -72,7 +72,7 @@ const InitSpeechEvents = () => {
 	utterance.addEventListener('end', () => {
 		console.log('utteranceEnd');
 		EnableButtons();
-		throbber.style.transform = 'scale(1)';
+		//throbber.style.transform = 'scale(3)';
 		
 	});
 };
@@ -95,7 +95,7 @@ const InitUiEvents = () => {
 	
 	btnCancel.addEventListener('click', () => {
 		speechSynthesis.cancel();
-		throbber.style.transform = 'scale(1)';
+		//throbber.style.transform = 'scale(1)';
 		EnableButtons();
 	});
 	
