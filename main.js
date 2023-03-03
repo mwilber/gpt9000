@@ -137,6 +137,12 @@ const QueryGPT = (query) => {
 		method: "post",
 	};
 
+	gtag('event', 'GPT Query', {
+		'event_category': 'query',
+		'event_label': query,
+		'value': 1
+	  });
+
 	return fetch('https://proxygpt.greenzeta.com', options)
 		.then(response => response.json())
 		.then(
@@ -146,6 +152,11 @@ const QueryGPT = (query) => {
 };
 
 const SayIt = (txtScript) => {
+	gtag('event', 'Speech API', {
+		'event_category': 'speak',
+		'event_label': txtScript.substring(0, 10),
+		'value': 1
+	  });
 	utterance.text = txtScript;
 	throbber.dataset.state = "speaking";
 		speechSynthesis.speak(utterance);
