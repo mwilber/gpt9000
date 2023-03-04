@@ -42,7 +42,6 @@ const InitSpeechEvents = () => {
 			!event.results[0].length ||
 			!event.results[0][0].transcript
 		) {
-			SayIt("I was not able to hear you. Please try again.");
 			Reset();
 		} else {
 			let query = event.results[0][0].transcript;
@@ -50,6 +49,10 @@ const InitSpeechEvents = () => {
 			QueryAndSpeak(query);
 		}
 	};
+	recog.addEventListener('error', (e) => {
+		console.log(e);
+		Reset();
+	});
 	
 	utterance.onboundary = (e) => {
 		console.log(e);
@@ -72,6 +75,7 @@ const InitSpeechEvents = () => {
 		}
 	};
 	
+	utterance.addEventListener('error', Reset);
 	utterance.addEventListener('start', console.log('utteranceStart'));
 	utterance.addEventListener('end', () => {
 		console.log('utteranceEnd');
