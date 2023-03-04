@@ -38,6 +38,8 @@ const InitSpeechEvents = () => {
 	
 	utterance.onboundary = (e) => {
 		console.log(e);
+		throbber.style.animation = 'none';
+
 		const spokenWord = e.utterance.text.substring(e.charIndex, e.charIndex+e.charLength);
 		const nextChar = e.utterance.text.substring(e.charIndex+e.charLength, e.charIndex+e.charLength+1)
 		const charsRemaining = e.utterance.text.length - (e.charIndex+1);
@@ -45,7 +47,7 @@ const InitSpeechEvents = () => {
 	
 		
 		if(/[,.?]/.test(spokenWord)) {
-			//throbber.style.transform = 'scale(0)';
+			throbber.style.transform = '';
 		} else {
 			console.log(spokenWord, nextChar, charsRemaining);
 			throbber.style.transform = `scale(${scale})`;
@@ -71,6 +73,7 @@ const InitSpeechEvents = () => {
 	});
 	utterance.addEventListener('end', () => {
 		console.log('utteranceEnd');
+		throbber.style.animation = "";
 		EnableButtons();
 		//throbber.style.transform = 'scale(3)';
 		
@@ -141,14 +144,11 @@ const QueryGPT = (query) => {
 		'event_category': 'query',
 		'event_label': query,
 		'value': 1
-	  });
+	});
 
 	return fetch('https://proxygpt.greenzeta.com', options)
 		.then(response => response.json())
-		.then(
-			data => data.choices[0].message.content
-		);
-
+		.then(data => data.choices[0].message.content);
 };
 
 const SayIt = (txtScript) => {
@@ -156,10 +156,10 @@ const SayIt = (txtScript) => {
 		'event_category': 'speak',
 		'event_label': txtScript.substring(0, 10),
 		'value': 1
-	  });
+	});
 	utterance.text = txtScript;
 	throbber.dataset.state = "speaking";
-		speechSynthesis.speak(utterance);
+	speechSynthesis.speak(utterance);
 };
 
 window[ addEventListener ? 'addEventListener' : 'attachEvent' ]
