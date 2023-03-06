@@ -124,7 +124,13 @@ const QueryGPT = (query) => {
 
 	return fetch('https://proxygpt.greenzeta.com', options)
 		.then(response => response.json())
-		.then(data => data.choices[0].message.content);
+		.then(data => {
+			if(data && data.choices && data.choices.length) {
+				return data.choices[0].message.content;
+			} else {
+				return "My Mind Is Going. . . I Can Feel It.";
+			}
+		});
 };
 
 const SayIt = (txtScript) => {
