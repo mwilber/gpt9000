@@ -5,7 +5,21 @@ let recog, utterance;
 // Params
 let delay, scale, timer;
 
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+
+const WebSpeechUnavailable = () => {
+	buttons.forEach(btn => btn.setAttribute('disabled', 'true'));
+	btnCancel.setAttribute('disabled', 'true');
+	alert('Could not find the Web Speech API. Try this page in a different browser.');
+};
+
 const Init = () => {
+
+	if(!SpeechRecognition || !SpeechSynthesisUtterance || !window.speechSynthesis) {
+		WebSpeechUnavailable();
+		return;
+	}
+
 	btnCancel = document.getElementById('cancel');
 	
 	btnTest = document.getElementById('test');
